@@ -1,0 +1,1 @@
+<template name="76c4e942"><view class="_view 76c4e942"><view style="padding: 50rpx;text-align: center;font-size: 64rpx;color: #888888;" class="_view 76c4e942">我的</view><button type="primary" bindtap="handleProxy" data-eventid="{{'76c4e942-0'}}" data-comkey="{{$k}}" class="_button 76c4e942">显示loading</button></view></template>

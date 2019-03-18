@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "my-html": "/wxcomponents/myhtml/myhtml"
+  }
+}

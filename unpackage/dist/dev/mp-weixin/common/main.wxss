@@ -1,0 +1,150 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*每个页面公共css */
+
+
+.loader-17 .css-square { position: absolute; top: 50%; width: 40rpx; height: 12rpx; background: #ffffff;
+}
+.loader-17 .square1 { left: 70px; -webkit-animation: dominos 1s 0.125s ease infinite; animation: dominos 1s 0.125s ease infinite;
+}
+.loader-17 .square2 { left: 60px; -webkit-animation: dominos 1s 0.3s ease infinite; animation: dominos 1s 0.3s ease infinite;
+}
+.loader-17 .square3 { left: 50px; -webkit-animation: dominos 1s 0.425s ease infinite; animation: dominos 1s 0.425s ease infinite;
+}
+.loader-17 .square4 { left: 40px; -webkit-animation: dominos 1s 0.540s ease infinite; animation: dominos 1s 0.540s ease infinite;
+}
+.loader-17 .square5 { left: 30px; -webkit-animation: dominos 1s 0.665s ease infinite; animation: dominos 1s 0.665s ease infinite;
+}
+.loader-17 .square6 { left: 20px; -webkit-animation: dominos 1s 0.79s ease infinite; animation: dominos 1s 0.79s ease infinite;
+}
+.loader-17 .square7 { left: 10px; -webkit-animation: dominos 1s 0.9s ease infinite; animation: dominos 1s 0.9s ease infinite;
+}
+.loader-17 .square8 { left: 0px; -webkit-animation: dominos 1s 1s ease infinite; animation: dominos 1s 1s ease infinite;
+}
+/*LOADER-4*/
+.loader-4 { border: 7px double #ff5722;-webkit-animation: ball-turn 1s linear infinite;animation: ball-turn 1s linear infinite;
+}
+.loader-4:before,  .loader-4:after { content: ""; position: absolute; width: 12px; height: 12px; background: #ff5722; border-radius: 50%; bottom: 0; right: 37px;
+}
+.loader-4:after { left: 37px; top: 0;
+}
+@-webkit-keyframes dominos {
+50% {
+opacity: 0.7;
+}
+75% {
+-webkit-transform: rotate(90deg);
+transform: rotate(90deg);
+}
+80% {
+opacity: 1;
+}
+}
+@keyframes dominos {
+50% {
+opacity: 0.7;
+}
+75% {
+-webkit-transform: rotate(90deg);
+transform: rotate(90deg);
+}
+80% {
+opacity: 1;
+}
+}
+@-webkit-keyframes ball-turn {
+0% {
+ -webkit-transform: rotate(0deg);
+ transform: rotate(0deg);
+}
+100% {
+ -webkit-transform: rotate(360deg);
+ transform: rotate(360deg);
+}
+}
+@keyframes ball-turn {
+0% {
+ -webkit-transform: rotate(0deg);
+ transform: rotate(0deg);
+}
+100% {
+ -webkit-transform: rotate(360deg);
+ transform: rotate(360deg);
+}
+}
+.loading_box{
+	width: 100%;
+	height: 100vh;
+	/* background-color: rgba(0,0,0,0.4); */
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 10000;
+}
+.loading{
+	width: 200rpx;
+	height: 200rpx;
+	margin-left: 275rpx;
+	margin-top: 300rpx;
+	text-align: center;
+	line-height: 200rpx;
+	color: #FFFFFF;
+	background-color: rgba(0,0,0,0.8);
+	border-radius: 20rpx;
+}
+.loading image{
+	width: 80rpx;
+	height: 80rpx;
+	vertical-align: middle;
+}
+.loading .icon{
+	width: 160rpx;
+	height: 160rpx;
+	vertical-align: middle;
+}
+.iconfont{
+	font-size: 60rpx;
+	display: inline-block;
+}
+/* 无限旋转动画 */
+.rotate {
+			-webkit-transition-property: -webkit-transform;
+			-webkit-transition-duration: 1s;
+			-moz-transition-property: -moz-transform;
+			-moz-transition-duration: 1s;
+			-webkit-animation: rotate 0.6s linear infinite;
+			animation: rotate 0.6s linear infinite;
+}
+@-webkit-keyframes rotate {
+from {
+				-webkit-transform: rotate(359deg)
+}
+to {
+				-webkit-transform: rotate(0deg)
+}
+}
+@keyframes rotate {
+from {
+				-webkit-transform: rotate(359deg);
+				        transform: rotate(359deg)
+}
+to {
+				-webkit-transform: rotate(0deg);
+				        transform: rotate(0deg)
+}
+}
+/* 无限旋转动画 end */
+
