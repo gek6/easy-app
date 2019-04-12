@@ -6,46 +6,63 @@
 			<button type="primary" @click="$store.dispatch('menu_4')">4个菜单</button>
 			<button type="primary" @click="$store.dispatch('menu_5')">5个菜单</button>
 			<button type="primary" @click="open_loading">显示loading</button>
- 
-			
+			<button type="primary" @click="test_get()">测试GET</button>
+			<button type="primary" @click="test_post()">测试POST</button>
 		</view>
-		
-		<view class="item" @click="get_detail(item.id)" v-for="(item,index) in list" :key="index">{{item.title}}</view>
-		<view class="des">数据来自 nodejs 中文社区 API </view>
-		
-		
+
+		<view class="item" @click="get_detail(item.id)" v-for="(item, index) in list" :key="index">{{ item.title }}</view>
+		<view class="des">数据来自 nodejs 中文社区 API</view>
 	</view>
 </template>
 <script>
-	export default {
-		data() {
-			return {
-				
-			};
+export default {
+	data() {
+		return {};
+	},
+	computed: {
+		list() {
+			return this.$store.state.list;
+		}
+	},
+	methods: {
+		open_loading() {
+			this.$loading();
 		},
-		computed:{
-			list(){
-				 
-				return this.$store.state.list;
-			}
+		get_detail(id) {
+			uni.navigateTo({
+				url: '/pages/detail/detail?id=' + id
+			});
 		},
-		methods:{
-			open_loading(){
-				this.$loading()
-			},
-			get_detail(id){
-				
-				uni.navigateTo({
-					url:"/pages/detail/detail?id="+id
+		test_get() {
+			this.$ajax
+				.get({
+					url: '/admin/get_product_list',
+					data: {
+						a: 1
+					}
 				})
-			},
-			
+				.then(res => {
+					this.$alert('状态码：' + res.code);
+					console.log(res);
+				});
+		},
+		test_post() {
+			// 基本同GET
+			this.$ajax
+				.post({
+					url: '/admin/get_product_list'
+				})
+				.then(res => {
+					this.$alert(res.code);
+					console.log(res);
+				});
 		}
 	}
+};
 </script>
 
 <style>
-.item{
+.item {
 	font-size: 28upx;
 	line-height: 60upx;
 	height: 60upx;
@@ -55,17 +72,17 @@
 	color: #888;
 	text-align: left;
 	overflow: hidden;
-	text-overflow:ellipsis;
+	text-overflow: ellipsis;
 	white-space: nowrap;
 }
-.des{
+.des {
 	text-align: center;
 	padding: 30upx;
 	margin-top: 100upx;
 	font-size: 30upx;
 	color: #888888;
 }
-button{
+button {
 	width: 330upx;
 	float: left;
 	margin-left: 30upx;

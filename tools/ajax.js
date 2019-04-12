@@ -13,7 +13,7 @@ function request(params, method) {
 	let token = uni.getStorageSync("token") || '3f2c4b212e089a766028c7e89d74c013ceecb9b3';
 	
 	return new Promise(function(resolve, reject) {
-
+		// 根据具体业务需求更改必要参数
 		if (!config.base_url || !config._acid || !config._uniacid) {
 			console.log('config.js 中参数配置不全');
 			reject('config.js 中参数配置不全');
@@ -21,6 +21,9 @@ function request(params, method) {
 		}
 
 		// 添加必要参数 根据具体业务定
+		
+		/*
+		
 		if (params.data) {
 			params.data._acid = config._acid,
 				params.data._uniacid = config._uniacid,
@@ -30,9 +33,13 @@ function request(params, method) {
 				_acid: config._acid,
 				_uniacid: config._uniacid,
 				access_token: token
-
+		
 			}
 		}
+		
+		
+		*/
+		
 		$store.commit("switch_loading","1")
 		uni.request({
 			url: config.base_url + params.url,
@@ -44,8 +51,14 @@ function request(params, method) {
 			},
 			success(res) {
 				// 成功回调
-				if (res.sta) {
-					resolve(res)
+				 
+				if (res.statusCode==200) {
+					resolve(res.data)
+				}else{
+					uni.showToast({
+						title:'服务器错误:'+res.statusCode,
+						icon:'none'
+					})
 				}
 
 			},
@@ -66,10 +79,12 @@ function request(params, method) {
 export default {
 
 	async get(params) {
-		await request(params, "GET")
+		return request(params, "GET");
+	 
+		
 	},
 	async post(params) {
-		await request(params, "POST")
+		return await request(params, "POST")
 	},
 
 }

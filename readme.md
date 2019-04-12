@@ -58,7 +58,32 @@ export default {
 ```
 
 > 添加了自己常用的  request请求模块
+```
+//请求示例
+			this.$ajax
+				.get({
+					url: '/admin/get_product_list',
+					data: {
+						a: 1
+					}
+				})
+				.then(res => {
+					this.$alert('状态码：' + res.code);
+					console.log(res);
+				});
+```
 > 添加了自己封装的 上传图片的 模块
+```
+//上传示例
+			async choose_img_upload(n) {
+				this.data_null()
+				let uploader = new this.$Uploader();
+				let path_arr = await uploader.choose_and_upload(n);
+				console.log(path_arr);
+				this.img_urls = path_arr;
+				console.log(this.img_urls)
+			},
+```
 
 
 

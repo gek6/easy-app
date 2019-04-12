@@ -1,5 +1,5 @@
 
-.item{
+.item {
 	font-size: 28rpx;
 	line-height: 60rpx;
 	height: 60rpx;
@@ -9,18 +9,18 @@
 	color: #888;
 	text-align: left;
 	overflow: hidden;
-	-o-text-overflow:ellipsis;
-	   text-overflow:ellipsis;
+	-o-text-overflow: ellipsis;
+	   text-overflow: ellipsis;
 	white-space: nowrap;
 }
-.des{
+.des {
 	text-align: center;
 	padding: 30rpx;
 	margin-top: 100rpx;
 	font-size: 30rpx;
 	color: #888888;
 }
-._button{
+button {
 	width: 330rpx;
 	float: left;
 	margin-left: 30rpx;
@@ -30,50 +30,50 @@
 }
 
 
-.btns.data-v-7ebd8b98{
+.btns.data-v-62081ce8{
 		width: 100%;
 		overflow: hidden;
 }
-.content ._button.btn.data-v-7ebd8b98{
+.content button.btn.data-v-62081ce8{
 		width: 300rpx;
 		font-size: 30rpx;
 		float: left;
 		font-size: 28rpx;
 }
-.img_list.data-v-7ebd8b98{
+.img_list.data-v-62081ce8{
 		width: 100%;
 		margin-top: 50rpx;
 }
-text.data-v-7ebd8b98{
+text.data-v-62081ce8{
 word-break: keep-all;
 word-wrap: break-word;
 }
-.content.data-v-7ebd8b98 {
+.content.data-v-62081ce8 {
 	text-align: center;
 }
-.logo.data-v-7ebd8b98 {
+.logo.data-v-62081ce8 {
 	height: 200rpx;
 	width: 200rpx;
 	margin-top: 200rpx;
 }
-.title.data-v-7ebd8b98 {
+.title.data-v-62081ce8 {
 	font-size: 36rpx;
 	color: #8f8f94;
 }
-.btn.data-v-7ebd8b98{
+.btn.data-v-62081ce8{
 	width: 690rpx;
 	margin-left: 30rpx;
 	font-size: 32rpx;
 	margin-top: 30rpx;
 }
-.item.data-v-7ebd8b98{
+.item.data-v-62081ce8{
 	font-size: 32rpx;
 	width: 690rpx;
 	margin-left: 30rpx;
 	overflow: hidden;
 	margin-top: 30rpx;
 }
-.img.data-v-7ebd8b98{
+.img.data-v-62081ce8{
 	max-width: 690rpx;
  
 	margin-top: 30rpx;

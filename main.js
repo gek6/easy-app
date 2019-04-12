@@ -38,6 +38,18 @@ Vue.prototype.$ajax = $ajax;
 import upload_img from "./tools/upload_img.js";
 Vue.prototype.$Uploader = upload_img;
 
+// 无状态提示信息
+Vue.prototype.$alert = function(msg){
+	if(!msg){
+		return
+	}
+	uni.showToast({
+		title:msg,
+		icon:'none'
+	})
+};
+
+
 App.mpType = 'app';
 const app = new Vue({
     
