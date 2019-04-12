@@ -1,1 +1,0 @@
-<template name="3d4eed9b"><view class="_view 3d4eed9b loading_box" hidden="{{!(is_loading=='1')}}" bindtap="handleProxy" data-eventid="{{'3d4eed9b-0'}}" data-comkey="{{$k}}"><view class="_view 3d4eed9b loading"><image class="_image 3d4eed9b rotate" src="/static/loading2.png" mode></image></view></view></template>
