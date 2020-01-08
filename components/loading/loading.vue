@@ -1,136 +1,79 @@
 <template>
-	<view class="loading_box" v-show="is_loading=='1'" @click="switch_loading">
-		<view class="loading">
-			<image class="rotate" src="/static/loading2.png" mode=""></image>
-			 
+	<view class="c-loading-box" @tap="hideLoading" :style="loading_box_style" v-if="showLoading">
+		<view class="c-loading">
+			<image class="c-loading-img" :src="loading_img" mode=""></image>
 		</view>
-		
-		<!-- <view class="loading">
-			<view class="loader loader-17">
-			  <view class="css-square square1"></view>
-			  <view class="css-square square2"></view>
-			  <view class="css-square square3"></view>
-			  <view class="css-square square4"></view>
-			  <view class="css-square square5"></view>
-			  <view class="css-square square6"></view>
-			  <view class="css-square square7"></view>
-			  <view class="css-square square8"></view>
-			</view>
-			  
-		</view> -->
 	</view>
 </template>
- 
+
 <script>
+	let loading_img = require("@/static/laoding.gif");
+
 	export default {
-		data() {
-			return {
-				
-			};
-		},
-		methods:{
-			switch_loading(){
-				this.$loading()
+		computed: {
+			showLoading() {
+				return this.$store.state.showLoading
+			},
+			loading_box_style() {
+				let style_str = ''
+				if (this.show_loading_mask) {
+					style_str += "background-color: rgba(0, 0, 0, 0.3);"
+				} else {
+					style_str += "background-color: transparent;"
+				}
+				return style_str
 			}
 		},
-		computed:{
-			is_loading(){
-				console.log("---------")
-				console.log(this.$store.state.loading)
-				return this.$store.state.loading
+		data() {
+			return {
+				// 是否显示遮罩背景
+				show_loading_mask: true,
+				// 是否开启点击遮罩 关闭loading
+				hideLoadingActionIsOpen:true,
+				loading_img: loading_img
+			}
+		},
+		methods:{
+			hideLoading(){
+				if(this.hideLoadingActionIsOpen){
+					this.$store.commit("hideLoading");
+					console.log('已开启点击mask关闭loading的功能 可在loading组件中修改')
+				}else{
+					console.log('未开启点击mask关闭loading的功能 可在loading组件中修改')
+				}
+				
 			}
 		}
 	}
 </script>
 
-<style>
-@import "../../lib/loading_animate/loading.wxss";
-.loading_box{
-	width: 100%;
-	height: 100vh;
-	/* background-color: rgba(0,0,0,0.4); */
-	position: absolute;
-	left: 0;
-	top: 0;
-	z-index: 10000;
-}
-.loading{
-	width: 200upx;
-	height: 200upx;
-	margin-left: 275upx;
-	margin-top: 300upx;
-	text-align: center;
-	line-height: 200upx;
-	color: #FFFFFF;
-	background-color: rgba(0,0,0,0.8);
-	border-radius: 20upx;
-	
-}
-.loading image{
-	width: 80upx;
-	height: 80upx;
-	vertical-align: middle;
-}
-.loading .icon{
-	width: 160upx;
-	height: 160upx;
-	vertical-align: middle;
-}
-.iconfont{
-	font-size: 60upx;
-	display: inline-block;
-}
-/* 无限旋转动画 */
-		.rotate {
-			-webkit-transition-property: -webkit-transform;
-			-webkit-transition-duration: 1s;
-			-moz-transition-property: -moz-transform;
-			-moz-transition-duration: 1s;
-			-webkit-animation: rotate 0.6s linear infinite;
-			-moz-animation: rotate 0.6s linear infinite;
-			-o-animation: rotate 0.6s linear infinite;
-			animation: rotate 0.6s linear infinite;
-		}
-	
-		@-webkit-keyframes rotate {
-			from {
-				-webkit-transform: rotate(359deg)
-			}
-	
-			to {
-				-webkit-transform: rotate(0deg)
+<style lang="less" scoped>
+	.c-loading-box {
+		width: 100vw;
+		height: 100vh;
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 999999;
+		background-color: rgba(0, 0, 0, 0.4);
+
+		// background-color: transparen: ;t;
+		.c-loading {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background-color: #ffffff;
+			width: 120upx;
+			height: 120upx;
+			margin-left: 315upx;
+			border-radius: 10upx;
+			margin-top: 400upx;
+			box-shadow: 0 0 10upx #ccc;
+
+			.c-loading-img {
+				width: 80upx;
+				height: 80upx;
 			}
 		}
-	
-		@-moz-keyframes rotate {
-			from {
-				-moz-transform: rotate(359deg)
-			}
-	
-			to {
-				-moz-transform: rotate(0deg)
-			}
-		}
-	
-		@-o-keyframes rotate {
-			from {
-				-o-transform: rotate(359deg)
-			}
-	
-			to {
-				-o-transform: rotate(0deg)
-			}
-		}
-	
-		@keyframes rotate {
-			from {
-				transform: rotate(359deg)
-			}
-	
-			to {
-				transform: rotate(0deg)
-			}
-		}
-	
-		/* 无限旋转动画 end */
+	}
 </style>

@@ -1,25 +1,53 @@
 {
-    "pages" : [
-        //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-        {
-            "path" : "pages/index/index",
-            "style" : {
-                "navigationBarTitleText" : "uni-app"
-            }
-        },
-        {
-            "path" : "pages/detail/detail",
-            "style" : {
-				"usingComponents" : {
-				    "my-html" : "/wxcomponents/myhtml/myhtml"
-				}
+	"pages": [
+		//pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+		    "path" : "pages/home/home",
+		    "style" : {
+				"navigationBarTitleText":"首页"
 			}
+		}
+        ,{
+            "path" : "pages/home/goodsList",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/home/detail",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/home/article-detail",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/upload/qiniu",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/upload/oss",
+            "style" : {}
         }
     ],
-    "globalStyle" : {
-        "navigationBarTextStyle" : "black",
-        "navigationBarTitleText" : "uni-app",
-        "navigationBarBackgroundColor" : "#F8F8F8",
-        "backgroundColor" : "#F8F8F8"
-    }
+	"globalStyle": {
+		"mp-alipay": {
+			/* 支付宝小程序特有相关 */
+			"transparentTitle": "always",
+			"allowsBounceVertical": "NO"
+		},
+		"navigationBarBackgroundColor": "#FFFFFF",
+		"navigationBarTitleText": "企业站",
+		// "navigationStyle": "custom",
+		"navigationBarTextStyle": "black"
+	},
+	"usingComponts": true,
+		"condition": { //模式配置，仅开发期间生效
+		"current": 0, //当前激活的模式(list 的索引项)
+		"list": [{
+				"name": "上传图片至七牛云", //模式名称
+				"path": "pages/upload/qiniu", //启动页面
+				"query": "" //启动参数
+			}
+		]
+	}
+
 }

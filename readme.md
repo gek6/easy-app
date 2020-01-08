@@ -1,90 +1,144 @@
-> UNIAPP 自带的原生导航尽管流畅度非常好，但是在具体项目中有的时候需要动态设置以及特殊样式的 底部菜单 这个时候就需要自己去写一个自定义的底部tabbar
+<p style="text-align: center;"><img src="https://image.weilanwl.com/uni/UniAppReadme.jpg" alt="ColorUI简介"></img></p>
 
-1、比如需要特殊的图标 多出来一部分的
-![多出一部分的图标](https://upload-images.jianshu.io/upload_images/14418687-4d62fc04da4e8c6c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+## 前言
+ColorUI是一个css库！！！在你引入样式后可以根据class来调用组件，一些含有交互的操作我也有简单写，可以为你开发提供一些思路。插件市场版本如果和更新日志不一样，请移步Github下载。有组件需求或者Bug提交也可以移步到issues。
 
-2、根据登陆帐号的身份加载不同的tabbar
-![根据登陆帐号的身份加载不同的tabbar](https://upload-images.jianshu.io/upload_images/14418687-ee79d8a8f6f0d4f9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-##### 动图预览
-![预览](https://upload-images.jianshu.io/upload_images/14418687-baa8b957e28a455e.gif?imageMogr2/auto-orient/strip)
+## 交流
+微信群：加入微信群请先添加开发者微信，备注UniApp插件市场。QQ群：240787041 或扫描二维码。
+<p style="text-align: center;"><img src="https://image.weilanwl.com/colorui/githubQrcode.jpg" alt="" style="max-width:100%;" width="748"></p>				  
 
-##### 解决方案
-- 将整个首屏4个页面作为组件加载进来 如 入口 index.vue
-- 将 自定义tabbar 写到 index.vue 中 或将其封装为组件 加载进来
-- 使用vuex 统一管理数据
-- 使用小程序自定义组件去解析HTML代码 （UNI的wxParse 看着麻烦 直接撸小程序自定义组件）
+## 素材
+ColorUI在语雀有个群友共同在维护的知识库，里面有一些群友改的模板和UI素材供开发使用哦！
+[语雀-ColorUI群资源](https://www.yuque.com/colorui)
+ 
+## 开始使用
+下载源码解压，复制根目录的 `/colorui` 文件夹到你的根目录
 
-
-##### 引入组件（页面）
-![引入组件（页面）](https://upload-images.jianshu.io/upload_images/14418687-8d0d3e9d5ba1fad6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-![渲染首页数据](https://upload-images.jianshu.io/upload_images/14418687-52f5b4dc11852c3f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-
-##### 底部tabbar的切换及数据来源
-只要控制 store中的 底部菜单数据 即可。页面中动态渲染
-
+`App.vue` 引入关键Css `main.css` `icon.css`
 ```
-export default {
-	state:{
-		footer_nav:[
-			{
-				name:'首页',
-				name_code:'home',
-				icon:'/static/footer_icon/a2.png',
-				select_icon:'/static/footer_icon/a1.png'
-			},
-			{
-				name:'发布',
-				name_code:'publish',
-				icon:'/static/footer_icon/f2.png',
-				select_icon:'/static/footer_icon/f1.png'
-			},
-			{
-				name:'我的',
-				name_code:'my',
-				icon:'/static/footer_icon/d1.png',
-				select_icon:'/static/footer_icon/d2.png'
-			},
-			
-		],
-		now_page_index:0,
-	},
-	mutations:{
-		change_page(state,index){
-			state.now_page_index = index;
+<style>
+    @import "colorui/main.css";
+	@import "colorui/icon.css";
+	@import "app.css"; /* 你的项目css */
+	....
+</style>
+```
+
+------
+
+## 使用自定义导航栏
+导航栏作为常用组件有做简单封装，当然你也可以直接复制代码结构自己修改，达到个性化目的。
+
+`App.vue` 获得系统信息
+```
+onLaunch: function() {
+	uni.getSystemInfo({
+		success: function(e) {
+			// #ifndef MP
+			Vue.prototype.StatusBar = e.statusBarHeight;
+			if (e.platform == 'android') {
+				Vue.prototype.CustomBar = e.statusBarHeight + 50;
+			} else {
+				Vue.prototype.CustomBar = e.statusBarHeight + 45;
+			};
+			// #endif
+			// #ifdef MP-WEIXIN
+			Vue.prototype.StatusBar = e.statusBarHeight;
+			let custom = wx.getMenuButtonBoundingClientRect();
+			Vue.prototype.Custom = custom;
+			Vue.prototype.CustomBar = custom.bottom + custom.top - e.statusBarHeight;
+			// #endif		
+			// #ifdef MP-ALIPAY
+			Vue.prototype.StatusBar = e.statusBarHeight;
+			Vue.prototype.CustomBar = e.statusBarHeight + e.titleBarHeight;
+			// #endif
 		}
-	}
-}
+	})
+},
 ```
 
-> 添加了自己常用的  request请求模块
+`pages.json` 配置取消系统导航栏
 ```
-//请求示例
-			this.$ajax
-				.get({
-					url: '/admin/get_product_list',
-					data: {
-						a: 1
-					}
-				})
-				.then(res => {
-					this.$alert('状态码：' + res.code);
-					console.log(res);
-				});
+"globalStyle": {
+	"navigationStyle": "custom"
+},
 ```
-> 添加了自己封装的 上传图片的 模块
+复制代码结构可以直接使用，注意全局变量的获取。
+
+使用封装,在`main.js` 引入 `cu-custom` 组件。
 ```
-//上传示例
-			async choose_img_upload(n) {
-				this.data_null()
-				let uploader = new this.$Uploader();
-				let path_arr = await uploader.choose_and_upload(n);
-				console.log(path_arr);
-				this.img_urls = path_arr;
-				console.log(this.img_urls)
-			},
+import cuCustom from './colorui/components/cu-custom.vue'
+Vue.component('cu-custom',cuCustom)
 ```
 
+`page.vue` 页面可以直接调用了
+```
+<cu-custom bgColor="bg-gradual-blue" :isBack="true">
+	<block slot="backText">返回</block>
+	<block slot="content">导航栏</block>
+</cu-custom>
+```
+| 参数       | 作用   |类型    |  默认值 |
+| --------   | -----:  |-----:  | :----:  |
+| bgColor    | 背景颜色类名 |String  |   ''    |
+| isBack     | 是否开启返回 | Boolean |   false |
+| bgImage    | 背景图片路径 | String  |  ''     |
+
+| slot块       | 作用   |
+| --------   | -----:  |
+| backText    | 返回时的文字 | 
+| content     | 中间区域 | 
+| right    | 右侧区域(小程序端可使用范围很窄！)  | 
 
 
+------
 
+
+## 使用自定义Tabbar
+这部分暂时没有封装，思路可以参考下我的源码，原理是一个主页面引入多个页面，在主页面进行切换显示。这样可以解决切换时闪烁的问题。
+
+
+------
+
+
+## 更新日志
+
+ * 2019年4月25日 v2.1.6
+    *  删除var变量 向下兼容安卓APP
+	*  优化单选等表单控件
+
+ * 2019年4月25日 v2.1.5
+    *  优化图片上传
+    *  优化一些点击区域过小
+    *  优化图标旋转
+    *  优化demo显示
+    *  优化阴影
+    *  修复支付宝小程序编译出错
+
+ * 2019年4月14日 v2.1.4
+    *  新增多种阴影
+	*  修复一些var属性的错误
+	*  修复轮播图控制点隐藏不了
+	*  修改图标类名
+	*  修复表单组件里上传图片 ios没有图片显示问题
+
+ 
+ * 2019年4月01日 v2.1.3
+    *  优化代码,支持支付宝小程序
+	*  textarea 样式还原
+
+ * 2019年3月28日 v2.1.2
+	*  修复列表组件样式
+	*  优化主样式代码
+
+ * 2019年3月27日 v2.1.1
+    *  新增多种扩展
+    *  优化堆叠轮播图
+    *  优化消息列表
+	*  优化导航栏的封装
+	*  修复卡片评论错位(3月27日16:32:17)
+
+* 2019年3月25日 v2.1.0
+    *  完成元素，组件移植
+	*  icon文件更改名称，避免图标冲突
+	*  针对不同端口做了优化
