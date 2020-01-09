@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "ali-oss": "^6.4.0",
+    "dateformat": "^3.0.3",
+    "js-base64": "^2.5.1",
+    "random-string": "^0.2.0"
+  }
+}

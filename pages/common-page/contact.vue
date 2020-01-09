@@ -1,6 +1,5 @@
 <template>
 	<view>
-		
 		<view class="box">
 			<view class="cu-bar bg-white">
 				<view class="action">
@@ -51,6 +50,7 @@
 		<view class="padding-xs flex align-center">
 			<view class="flex-sub">
 				<view style="padding: 10upx;">以base64直传七牛云</view>
+				<view style="padding: 10upx;">已测 微信小程序 头条小程序 APP安卓端 H5端 其他端未测</view>
 			</view>
 		</view>
 		<view class="box">
@@ -66,7 +66,9 @@
 		</view>
 		<view class="padding-xs flex align-center">
 			<view class="flex-sub">
-				<view style="padding: 10upx;">以base64直传阿里OSS</view>
+				<view style="padding: 10upx;">H5以后端签名STS，及OSS官方插件直传阿里OSS</view>
+				<view style="padding: 10upx;">其他端直接为前端签名，因为除了H5其他端的源码 客户端不会看到。安全起见H5端使用STS签名</view>
+				<view style="padding: 10upx;">已测 微信小程序 头条小程序 APP安卓端 H5端 其他端未测</view>
 			</view>
 		</view>
 	</view>

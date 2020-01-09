@@ -88,8 +88,8 @@
 		},
 		mounted() {
 			this.init_page_size();
+			this.$store.dispatch("getArticles");
 			
-			this.$store.dispatch("getArticles")
 		}
 	}
 </script>

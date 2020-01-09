@@ -4,7 +4,7 @@
 	export default {
 		onLaunch: function() {
 			ajax.get({
-				url: 'http://gek6.cn/fr-uni-app-config/uni-setting.json'
+				url: 'http://oss-sign.gek6.com/uni-setting.json'
 			}).then(res => {
 
 				this.$store.commit("SET_COLOR", res);
