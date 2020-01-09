@@ -39,7 +39,7 @@
 			uploadOne(){
 				uni.chooseImage({
 					success:async (tempRes) => {
-						// console.log(tempRes.tempFiles);
+						console.log(tempRes);
 						let file = tempRes.tempFiles[0]
 						// 上传多张在这里写个for循环即可 因为是 await 所以会同步执行 一个个传完
 						let res = await this.$uploader.upload2qiniu(file);
