@@ -1,20 +1,27 @@
 ### 介绍 3.0
-> 基于uni-app，主要适配 微信小程序、APP、H5。
+> 项目重写了~~基于uni-app，colorUI，封装了《自定义TabBar》《上传图片》《全局自定义loading》等功能 主要适配 微信小程序、APP、H5。
 
 ### 新版特点
 - 加入了 colorUI 开发起来更顺手更快。
 - 融合了七牛云存储+阿里OSS存储
 - 优化了TabBar
+#### GitHub地址：[https://github.com/gek6/fr-uni-app](https://github.com/gek6/fr-uni-app )   有用的话给个start啊
 #### H5在线示例 [H5在线示例](http://gek6.cn/h5/#/)
-#### 全局自定义loading
-```
-// 已在 main.js 注册全局组件，在每个页面中 添加<cu-loading>即可 页面中添加即可，其他组件无需添加。（页面就是在pages.json 中注册了的）
+![](http://img.gek6.com/FtuuwLzZmDxSeaEOGgzRFticYL_W)
 
-<cu-loading></cu-loading>
-// 具体
-// 是否显示 半透明背景
-// 是否点击 半透明背景 关闭loading
-// 在 /components/loading/loading.vue 中自行修改
+#### 第一步当然是 npm install 安装下依赖了。
+
+#### 全局自定义loading
+
+```
+	// 已在 main.js 注册全局组件，在每个页面中 添加<cu-loading>即可 页面中添加即可，其他组件无需添加。（页面就是在pages.json 中注册了的）
+
+	<cu-loading></cu-loading>
+	// 具体
+	// 是否显示 半透明背景
+	// 是否点击 半透明背景 关闭loading
+	// 在 /components/loading/loading.vue 中自行修改
+	
 ```
 
 #### 自定义TabBar

@@ -1,6 +1,6 @@
 {
     "name" : "极客蜗牛",
-    "appid" : "__UNI__EAAA6D1",
+    "appid" : "",
     "description" : "",
     "versionName" : "极客蜗牛 1.0.0",
     "versionCode" : 100,
@@ -54,7 +54,7 @@
     /* 快应用特有相关 */
     "mp-weixin" : {
         /* 小程序特有相关 */
-        "appid" : "wx26f89d4cf63e7778",
+        "appid" : "",
         "setting" : {
             "urlCheck" : false,
             "es6" : true
@@ -62,7 +62,7 @@
     },
     "h5" : {
         "title" : "极客蜗牛",
-        "domain" : "gek6.com",
+        "domain" : "demo.color-ui.com",
         "template" : "index.html",
         "router" : {
             "base" : "/h5/"
@@ -78,6 +78,6 @@
             "minified" : false,
             "urlCheck" : false
         },
-        "appid" : "tt7ff40949e0de4dea"
+        "appid" : ""
     }
 }
