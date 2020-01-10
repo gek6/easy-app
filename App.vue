@@ -6,7 +6,6 @@
 			ajax.get({
 				url: 'http://oss-sign.gek6.com/uni-setting.json'
 			}).then(res => {
-
 				this.$store.commit("SET_COLOR", res);
 				this.$store.commit("SET_TABBAR",res.tabbar);
 			})
@@ -286,5 +285,10 @@
 				// background-color: #AAAAAA;
 			}
 		}
+	}
+	
+	image{
+		// 在支付宝小程序上所有图片都被编译成以背景图的形式显示
+		background-size: 100% 100%;
 	}
 </style>

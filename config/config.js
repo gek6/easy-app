@@ -17,12 +17,13 @@ let config = {
    	snsapi_userinfo 弹出授权页面，可通过openid拿到昵称、性别、所在地。并且， 即使在未关注的情况下，只要用户授权，也能获取其信息
    */
 	wx_code_type:'snsapi_userinfo',
-	
-	OSS_endpoint:"oss-cn-beijing.aliyuncs.com",
-	OSS_bucket:"thamiti",
-	oss_host:'https://thamiti.oss-cn-beijing.aliyuncs.com/',
-	oss_accesskey:'gw6ioulMF2emkZlzSlstIk9KZyi1xy',
-	oss_accessId:'LTAIJvhI7qZBLp0K',
+	/* 配置 */
+	OSS_endpoint:"oss-cn-beijing.aliyuncs.com", // OSS地址
+	OSS_bucket:"xxx",// oss 仓库名
+	oss_host:'https://xxx.oss-cn-beijing.aliyuncs.com/', // 客户端直传时的地址 
+	// OSS最高权限的 秘钥 H5端 用不到
+	oss_accesskey:'xxxxxxx',
+	oss_accessId:'xxxxx',
 	
 }
 

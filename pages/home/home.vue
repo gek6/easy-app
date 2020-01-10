@@ -103,6 +103,7 @@
 		image{
 			width: 60upx;
 			height: 60upx;
+			
 		}
 	}
 	.tabbar-icon.big-icon{
