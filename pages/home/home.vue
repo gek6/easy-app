@@ -62,7 +62,13 @@
 				uni.setNavigationBarTitle({
 					title:item.title
 				})
-				this.page = item.page
+				this.page = item.page;
+				uni.showToast({
+					title:this.page+'显示',
+					icon:'none'
+				})
+				// 可代替onshow去做一些业务逻辑
+				// 因为数据全都在vuex 动态管理
 			},
 			// 初始化内容区域的高度
 			async init_page_size() {
@@ -103,6 +109,7 @@
 		image{
 			width: 60upx;
 			height: 60upx;
+			
 		}
 	}
 	.tabbar-icon.big-icon{
