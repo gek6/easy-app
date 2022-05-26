@@ -1,0 +1,13 @@
+/* #ifdef H5 */
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+/* #endif */
+/* #ifndef H5 */
+view,
+text {
+  font-size: 32rpx;
+}
+/* #endif */

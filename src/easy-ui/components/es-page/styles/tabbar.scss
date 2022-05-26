@@ -1,0 +1,107 @@
+@import "./index.scss";
+.es-tabbar {
+  height: $tabbarHeight;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background-color: $tabbar-bg-color;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 10;
+  .es-tabbar-shadow-line {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 9;
+    height: 100%;
+    box-shadow: 0 0 10rpx $tabbar-shadow-color;
+  }
+  .es-tabbar-item {
+    width: 100%;
+    display: flex;
+    padding: 0 10rpx;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 11;
+    .big-shadow {
+      display: none;
+    }
+    .tab-icon {
+      font-size: 46rpx;
+      color: $tabbar-text-color;
+      position: relative;
+      z-index: 11;
+      font-weight: bold;
+    }
+    .tab-title {
+      font-size: 26rpx;
+      color: $tabbar-text-color;
+      position: relative;
+      z-index: 11;
+      font-weight: bold;
+    }
+  }
+  .es-tabbar-item.es-tabbar-active {
+    .tab-icon {
+      color: $tabbar-text-active-color;
+    }
+    .tab-title {
+      font-size: 26rpx;
+      color: $tabbar-text-active-color;
+
+      text-shadow: 0px 0px 0px $tabbar-text-active-color;
+    }
+  }
+  .es-tabbar-item.big {
+    transform: translateY(-18rpx);
+    z-index: 10;
+    // background-color: $tabbar-bg-color;
+
+    .big-shadow {
+      width: 120rpx;
+      height: 120rpx;
+      position: absolute;
+      display: block;
+      top: -20rpx;
+
+      .big-shadow-mask {
+        width: 110%;
+        height: 90rpx;
+        background-color: $tabbar-bg-color;
+        position: absolute;
+        top: 48rpx;
+        left: -5%;
+        z-index: 11;
+      }
+      .big-shadow-instance {
+        width: 90%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 5%;
+        border-top-left-radius: 50%;
+        border-top-right-radius: 50%;
+        background-color: $tabbar-bg-color;
+        box-shadow: 0 0 10rpx $tabbar-shadow-color;
+      }
+    }
+
+    .tab-title {
+      font-size: 26rpx;
+    }
+    .tab-icon {
+      font-size: 80rpx;
+      padding: 0 16rpx;
+      border-radius: 50%;
+      background-color: $tabbar-bg-color;
+      top: -8rpx;
+    }
+  }
+}
