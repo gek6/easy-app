@@ -2,7 +2,7 @@
  * @Date: 2022-05-18 15:08:06
  * @LastEditors: YuanBo
  * @Author: YuanBo
- * @LastEditTime: 2022-05-26 18:50:53
+ * @LastEditTime: 2022-06-01 14:23:09
  * @FilePath: /easy-app/src/pages/home/index.vue
 -->
 <template>
@@ -20,11 +20,19 @@ const [register,{ removeItemByIndex }] = useEslist({
       icon:"es-icon es-icon-wendang",
       label:"表单",
       rightArrow:true,
+      path:"/pages/example/form/index",
     },
     {
       icon:"es-icon es-icon-wendang",
       label:"按钮",
       rightArrow:true,
+      path:"/pages/example/button/index",
+    },
+    {
+      icon:"es-icon es-icon-wendang",
+      label:"列表",
+      rightArrow:true,
+      path:"/pages/example/list/index",
     }
   ]
 });
