@@ -2,7 +2,7 @@
  * @Date: 2022-05-31 18:08:50
  * @LastEditors: YuanBo
  * @Author: YuanBo
- * @LastEditTime: 2022-06-02 18:17:45
+ * @LastEditTime: 2022-06-07 18:45:39
  * @FilePath: /easy-app/src/easy-ui/components/es-form/index.vue
 -->
 <template>
@@ -11,16 +11,23 @@
       <text class="es-icon es-icon-loading es-icon-animation-spin"></text>
       表单加载中...
     </view>
+    <view class="es-form-error" v-else-if="esFormError.isError">
+      <view>表单加载出错了</view>
+      <view>错误信息</view>
+      <view>{{ esFormError.errorInfo }}</view>
+    </view>
     <view class="es-form-container" v-else>
       <view class="es-form-block">
         <view
+          class="es-form-item-box"
           v-for="(formSchema, schemaIndex) in formSchemas"
           :key="schemaIndex"
         >
-          <!-- Input -->
+          <!-- Input 输入框-->
           <view
             :class="{
               'es-form-item-round-bottom':
+                schemaIndex < formSchemas.length - 1 &&
                 formSchemas[schemaIndex + 1].component === 'SplitLine',
               'es-form-item-round-top':
                 schemaIndex > 0 &&
@@ -54,9 +61,86 @@
                 </view>
               </view>
             </view>
-            <view class="es-form-item-bottom-line"></view>
+            <view
+              class="es-form-item-bottom-line"
+              v-if="
+                showItemSplitLine &&
+                schemaIndex < formSchemas.length - 1 &&
+                formSchemas[schemaIndex + 1].component !== 'SplitLine'
+              "
+            ></view>
           </view>
-          <!-- select -->
+          <!-- VerifyCodeInput 验证码输入框-->
+          <view
+            :class="{
+              'es-form-item-round-bottom':
+                schemaIndex < formSchemas.length - 1 &&
+                formSchemas[schemaIndex + 1].component === 'SplitLine',
+              'es-form-item-round-top':
+                schemaIndex > 0 &&
+                formSchemas[schemaIndex - 1].component === 'SplitLine',
+            }"
+            class="es-form-item"
+            v-if="formSchema.component === 'VerifyCodeInput'"
+          >
+            <view class="es-form-item-container">
+              <view class="es-form-item-label">
+                <text>{{ formSchema.label || "未知" }}</text>
+              </view>
+              <view
+                class="es-form-item-content es-form-item-content-verify-code"
+              >
+                <input
+                  class="input"
+                  placeholder-class="input-placeholder"
+                  v-model="formData[formSchema.field]"
+                  :maxlength="
+                    formSchema.componentProps?.verifyCodeValueLength || 6
+                  "
+                  :type="formSchema.componentProps?.inputType || 'text'"
+                  :placeholder="
+                    formSchema.componentProps?.placeholder || '请输入'
+                  "
+                />
+                <es-button
+                  :type="
+                    formSchema.componentProps?.verifyCodeBtnProps?.type ||
+                    'primary'
+                  "
+                  :size="
+                    formSchema.componentProps?.verifyCodeBtnProps?.size ||
+                    'default'
+                  "
+                  :plain="
+                    formSchema.componentProps?.verifyCodeBtnProps?.plain ||
+                    false
+                  "
+                  :round="
+                    formSchema.componentProps?.verifyCodeBtnProps?.round ||
+                    false
+                  "
+                  :disabled="verifyCodeTimer > 0"
+                  :loading="getVerifyCodeBtnIsLoading"
+                  @click="getVerifyCode(formData, formSchema)"
+                  >{{
+                    verifyCodeTimer > 0
+                      ? verifyCodeTimer
+                      : formSchema.componentProps?.verifyCodeBtnProps?.text ||
+                        "获取验证码"
+                  }}</es-button
+                >
+              </view>
+            </view>
+            <view
+              class="es-form-item-bottom-line"
+              v-if="
+                showItemSplitLine &&
+                schemaIndex < formSchemas.length - 1 &&
+                formSchemas[schemaIndex + 1].component !== 'SplitLine'
+              "
+            ></view>
+          </view>
+          <!-- Select 普通单选-->
           <picker
             mode="selector"
             :range-key="formSchema.componentProps?.labelField || 'label'"
@@ -64,6 +148,7 @@
             :range="formSchema.componentProps?.options"
             :class="{
               'es-form-item-round-bottom':
+                schemaIndex < formSchemas.length - 1 &&
                 formSchemas[schemaIndex + 1].component === 'SplitLine',
               'es-form-item-round-top':
                 schemaIndex > 0 &&
@@ -91,9 +176,16 @@
                 <text class="es-icon es-icon-xiangyou"></text>
               </view>
             </view>
-            <view class="es-form-item-bottom-line"></view>
+            <view
+              class="es-form-item-bottom-line"
+              v-if="
+                showItemSplitLine &&
+                schemaIndex < formSchemas.length - 1 &&
+                formSchemas[schemaIndex + 1].component !== 'SplitLine'
+              "
+            ></view>
           </picker>
-          <!-- ApiSelect -->
+          <!-- ApiSelect 远程单选 -->
           <picker
             mode="selector"
             :range-key="formSchema.componentProps?.labelField || 'label'"
@@ -101,6 +193,7 @@
             :range="formSchema.componentProps?.options"
             :class="{
               'es-form-item-round-bottom':
+                schemaIndex < formSchemas.length - 1 &&
                 formSchemas[schemaIndex + 1].component === 'SplitLine',
               'es-form-item-round-top':
                 schemaIndex > 0 &&
@@ -128,15 +221,86 @@
                 <text class="es-icon es-icon-xiangyou"></text>
               </view>
             </view>
-            <view class="es-form-item-bottom-line"></view>
+            <view
+              class="es-form-item-bottom-line"
+              v-if="
+                showItemSplitLine &&
+                schemaIndex < formSchemas.length - 1 &&
+                formSchemas[schemaIndex + 1].component !== 'SplitLine'
+              "
+            ></view>
           </picker>
+          <!-- CascadeSelect 级联选择 -->
+          <view
+            :class="{
+              'es-form-item-round-bottom':
+                schemaIndex < formSchemas.length - 1 &&
+                formSchemas[schemaIndex + 1].component === 'SplitLine',
+              'es-form-item-round-top':
+                schemaIndex > 0 &&
+                formSchemas[schemaIndex - 1].component === 'SplitLine',
+            }"
+            class="es-form-item"
+            v-if="
+              formSchema.component === 'CascadeSelect' ||
+              formSchema.component === 'ApiCascadeSelect'
+            "
+          >
+            <view class="es-form-item-container">
+              <view class="es-form-item-label">
+                <text>{{ formSchema.label || "未知" }}</text>
+              </view>
+              <view class="es-form-item-content">
+                <uniDataPicker
+                  :localdata="formSchema.componentProps?.options"
+                  :popup-title="
+                    formSchema.componentProps?.placeholder || '请选择'
+                  "
+                  v-slot:default="scope"
+                  :map="{
+                    text: formSchema.componentProps?.labelField || 'label',
+                    value: formSchema.componentProps?.valueField || 'value',
+                  }"
+                  @change="uniDataPickerOnchange($event, formSchema)"
+                  @nodeclick="uniDataPickerOnnodeclick"
+                >
+                  <template>
+                    <text
+                      class="input"
+                      :class="{
+                        'input-placeholder': !formData[formSchema.field].length,
+                      }"
+                    >
+                      {{
+                        formData[formSchema.field + "__label"] ||
+                        formSchema.componentProps?.placeholder ||
+                        "请选择"
+                      }}
+                    </text>
+                  </template>
+                </uniDataPicker>
+              </view>
+              <view class="es-form-item-clear-icon">
+                <text class="es-icon es-icon-xiangyou"></text>
+              </view>
+            </view>
+            <view
+              class="es-form-item-bottom-line"
+              v-if="
+                showItemSplitLine &&
+                schemaIndex < formSchemas.length - 1 &&
+                formSchemas[schemaIndex + 1].component !== 'SplitLine'
+              "
+            ></view>
+          </view>
+          <!-- 分割线 -->
           <view
             class="es-form-item-split-line"
             v-if="formSchema.component === 'SplitLine'"
           ></view>
         </view>
       </view>
-      <view class="action-button-group">
+      <view class="action-button-group" v-if="showActionButtonGroup">
         <view style="width: 40%"
           ><es-button round plain type="primary" block>重置</es-button></view
         >
@@ -148,15 +312,46 @@
   </view>
 </template>
 <script lang="ts" setup>
-import { onMounted, ref, unref } from "vue";
+import { onMounted, reactive, ref, unref } from "vue";
 import { valueMap } from "./defaultValueMap";
 import { formItem, formMethods, formProps } from "./types";
 import cloneDeep from "lodash/cloneDeep";
 import esButton from "../es-button/index.vue";
+import { useVerifyCode } from "./hooks/verify-code";
+const { verifyCodeTimer, getVerifyCode, getVerifyCodeBtnIsLoading } =
+  useVerifyCode();
+// @ts-ignore
+import uniDataPicker from "../../uni-components/uni-data-picker/components/uni-data-picker/uni-data-picker.vue";
+// 事件
 const emit = defineEmits(["register"]);
+// 表单数据
 const formData = ref<any>({});
+// 表单结构
 const formSchemas = ref<formItem[]>([]);
+// 表单加载状态
 const esFormLoading = ref<boolean>(false);
+const esFormError = reactive<{ isError: boolean; errorInfo: any }>({
+  isError: false,
+  errorInfo: "",
+});
+const showItemSplitLine = ref<boolean>(true);
+// 表单操作按钮组显示状态
+const showActionButtonGroup = ref<boolean>(true);
+// 级联选项改变事件回调
+function uniDataPickerOnchange(even: any, formSchema: formItem) {
+  formData.value[formSchema.field + "__label"] = even.detail.value
+    .map((item: any) => item.text)
+    .join(formSchema?.componentProps?.joinStr || "/");
+  formData.value[formSchema.field] = even.detail.value.map(
+    (item: any) => item.value
+  );
+}
+// 级联选项点击事件回调
+function uniDataPickerOnnodeclick(event: any) {
+  // console.log("uniDataPickerOnnodeclick");
+  // console.log(event);
+}
+// 单选事件回调
 function selectChange(event: any, formSchema: formItem) {
   console.log(event.detail);
 
@@ -168,6 +363,7 @@ function selectChange(event: any, formSchema: formItem) {
       options[selectedIndex]["label"];
   }
 }
+// 远程单选事件回调
 function apiSelectChange(event: any, formSchema: formItem) {
   const { value: selectedIndex } = event.detail;
   const { options } = formSchema.componentProps || [];
@@ -178,23 +374,54 @@ function apiSelectChange(event: any, formSchema: formItem) {
       options[selectedIndex][formSchema.componentProps?.labelField || "label"];
   }
 }
+// 属性设置
 async function setProps(props: formProps) {
-  esFormLoading.value = true;
-  for (let i = 0; i < props.schemas.length; i++) {
-    const schema = props.schemas[i];
-    formData.value[schema.field] =
-      schema.defaultValue || valueMap[schema.component] || "";
-    if (schema.component === "ApiSelect") {
-      let api = schema.componentProps?.api;
-      if (schema.componentProps && api) {
-        const res = await api();
-        schema.componentProps.options = res;
+  showItemSplitLine.value = props.showItemSplitLine || true;
+  try {
+    esFormLoading.value = true;
+    for (let i = 0; i < props.schemas.length; i++) {
+      const schema = props.schemas[i];
+      // 初始化字段默认值
+      formData.value[schema.field] =
+        schema.defaultValue || valueMap[schema.component] || "";
+      // 加载ApiSelect选项
+      if (schema.component === "ApiSelect") {
+        let api = schema.componentProps?.api;
+        if (schema.componentProps && api) {
+          const res = await api();
+          if (schema.componentProps.resultField) {
+            schema.componentProps.options =
+              res[schema.componentProps.resultField];
+          } else {
+            schema.componentProps.options =
+              res["data"] || res["result"] || res["list"] || res;
+          }
+        }
+      }
+      // 加载ApiCascadeSelect选项
+      if (schema.component === "ApiCascadeSelect") {
+        let api = schema.componentProps?.api;
+        if (schema.componentProps && api) {
+          const res = await api();
+          if (schema.componentProps.resultField) {
+            schema.componentProps.options =
+              res[schema.componentProps.resultField];
+          } else {
+            schema.componentProps.options =
+              res["data"] || res["result"] || res["list"] || res;
+          }
+        }
       }
     }
+    esFormLoading.value = false;
+    formSchemas.value = props.schemas;
+  } catch (error) {
+    esFormLoading.value = false;
+    esFormError.isError = true;
+    esFormError.errorInfo = error;
   }
-  esFormLoading.value = false;
-  formSchemas.value = props.schemas;
 }
+// 清空表单指定字段数据
 function clearSchemaData(schema: formItem) {
   console.log("clearSchemaData", schema);
 
@@ -296,6 +523,10 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
 }
+.es-form-error {
+  color: $uni-color-error;
+  text-align: center;
+}
 $es-form-label-color: #343434;
 $es-form-item-height: 120rpx;
 .es-form-container {
@@ -309,11 +540,7 @@ $es-form-item-height: 120rpx;
       height: 20rpx;
       background-color: transparent;
     }
-    .es-form-item:last-child {
-      .es-form-item-bottom-line {
-        display: none;
-      }
-    }
+
     .es-form-item.es-form-item-round-bottom {
       border-bottom-left-radius: 20rpx;
       border-bottom-right-radius: 20rpx;
@@ -354,6 +581,15 @@ $es-form-item-height: 120rpx;
             color: $uni-text-color-placeholder;
           }
         }
+        .es-form-item-content.es-form-item-content-verify-code {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          width: 69%;
+          .input {
+            width: 200rpx;
+          }
+        }
         .es-form-item-clear-icon {
           width: $es-form-item-height;
           height: $es-form-item-height;
@@ -380,9 +616,10 @@ $es-form-item-height: 120rpx;
       }
       .es-form-item-bottom-line {
         position: absolute;
-        width: 100%;
-        height: 2rpx;
-        bottom: 0;
+        width: calc(100% - 68rpx);
+        margin-left: 34rpx;
+        height: 1px;
+        bottom: 1px;
         left: 0;
         background-color: $uni-bg-color-grey;
         // background-color: #aaa;
