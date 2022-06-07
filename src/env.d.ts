@@ -2,16 +2,23 @@
  * @Date: 2022-04-27 13:51:40
  * @LastEditors: YuanBo
  * @Author: YuanBo
- * @LastEditTime: 2022-06-02 16:39:13
+ * @LastEditTime: 2022-06-07 15:02:41
  * @FilePath: /easy-app/src/env.d.ts
  */
 /// <reference types="vite/client" />
+import { DefineComponent } from "vue";
 
-declare module '*.vue' {
-  import { DefineComponent } from 'vue'
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/ban-types
-  const component: DefineComponent<{}, {}, any>
-  export default component
+declare module "*.vue" {
+  const component: DefineComponent<{}, {}, any>;
+  export default component;
+}
+declare module "@vue/runtime-core" {
+  export interface GlobalComponents {
+    picker: DefineComponent<{
+      mode: "selector" | "multiSelector" | "time" | "date" | "region";
+    }>;
+    
+  }
 }
 
-declare module 'lodash/cloneDeep';
+declare module "lodash/cloneDeep";
