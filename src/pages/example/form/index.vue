@@ -2,7 +2,7 @@
  * @Date: 2022-05-24 14:20:12
  * @LastEditors: YuanBo
  * @Author: YuanBo
- * @LastEditTime: 2022-06-07 18:23:01
+ * @LastEditTime: 2022-06-08 15:57:28
  * @FilePath: /easy-app/src/pages/example/form/index.vue
 -->
 <template>
@@ -104,6 +104,32 @@ const [register] = useEsForm({
         valueField: "id",
         api: getCascadeSelectOptionsApi,
       },
+    },
+    // 分割线
+    {
+      field: "split-2",
+      label: "分割线",
+      component: "SplitLine",
+    },
+    // 上传
+    {
+      field: "upload",
+      label: "上传图片",
+      component: "Upload",
+      defaultValue: [
+        "http://cdn.gek6.cn/avatar/1.jpg",
+        "http://cdn.gek6.cn/avatar/2.jpg",
+        "http://cdn.gek6.cn/avatar/3.jpeg",
+      ],
+      componentProps:{
+        uploadProps:{
+          maxNum: 3,
+          alertText:"提示信息"
+        },
+        onChange(){
+          
+        }
+      }
     },
     // 分割线
     {

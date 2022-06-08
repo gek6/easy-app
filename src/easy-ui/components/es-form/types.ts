@@ -2,7 +2,7 @@
  * @Date: 2022-06-02 10:21:12
  * @LastEditors: YuanBo
  * @Author: YuanBo
- * @LastEditTime: 2022-06-07 18:27:58
+ * @LastEditTime: 2022-06-08 15:55:56
  * @FilePath: /easy-app/src/easy-ui/components/es-form/types.ts
  */
 // 组件属性
@@ -38,20 +38,33 @@ export interface componentProps {
   verifyCodeBtnProps?: {
     // 按钮文字
     text?: string;
-    size?:string,
-    type?:string,
-    plain?:boolean,
-    round?:boolean,
+    size?: string;
+    type?: string;
+    plain?: boolean;
+    round?: boolean;
   };
-  // 短信验证码位数
+  /**
+   * 短信验证码位数
+   */
   verifyCodeValueLength?: number;
-  // 短信验证码 获取成功后回调
+  /**
+   * 短信验证码 获取成功后回调
+   */
   verifyCodeSuccessHandler?: () => void;
+
+  onChange?: (value: any) => any;
+
+  /**
+   * 上传配置
+   * @maxNum number 最大上传数量
+   * @chooseImgProps object 选择图片配置
+   */
+   uploadProps?:uploadProps;
   // 允许其他未知属性
   [propName: string]: any;
 }
 export interface formItem {
-  defaultValue?: string;
+  defaultValue?: string | string[] | number | number[];
   // 字段名称
   field: string;
   // 字段标题
@@ -96,3 +109,37 @@ export interface formMethods {
   getFieldsValue: () => any;
 }
 export type useEsFormReturn = [(actions: formMethods) => void, formMethods];
+type chooseImgSizeType = "compressed" | "original";
+type chooseSourceType = "album" | "camera";
+export type chooseImgProps = {
+  /**
+   * 上传图片接口地址 默认读取env中的配置
+   */
+  uploadApiUrl?: string;
+  count?: number;
+  sizeType?: chooseImgSizeType[];
+  sourceType?: chooseSourceType[];
+  success?: (res: any) => void;
+  fail?: (err: any) => void;
+  complete?: (res: any) => void;
+};
+export type uploadProps = {
+  /**
+   * 上传最大数量
+   */
+  maxNum?: number;
+  /**
+   * 底部提示信息
+   */
+  alertText?: string;
+  /**
+   * 选择图片配置
+   * @uploadApiUrl string 上传图片接口地址 默认读取env中的配置
+   * @sizeType string[] 图片尺寸类型 默认值['compressed','original']
+   * @sourceType string[] 图片来源类型 默认值['album','camera']
+   * @success function 成功回调
+   * @fail function 失败回调
+   * @complete function 完成回调
+   */
+  chooseImgProps?: chooseImgProps;
+};

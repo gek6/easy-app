@@ -2,7 +2,7 @@
  * @Date: 2022-05-31 18:08:50
  * @LastEditors: YuanBo
  * @Author: YuanBo
- * @LastEditTime: 2022-06-07 18:45:39
+ * @LastEditTime: 2022-06-08 15:57:57
  * @FilePath: /easy-app/src/easy-ui/components/es-form/index.vue
 -->
 <template>
@@ -293,6 +293,80 @@
               "
             ></view>
           </view>
+          <!-- Upload 上传 -->
+          <view
+            :class="{
+              'es-form-item-round-bottom':
+                schemaIndex < formSchemas.length - 1 &&
+                formSchemas[schemaIndex + 1].component === 'SplitLine',
+              'es-form-item-round-top':
+                schemaIndex > 0 &&
+                formSchemas[schemaIndex - 1].component === 'SplitLine',
+            }"
+            class="es-form-item"
+            v-if="formSchema.component === 'Upload'"
+          >
+            <view class="es-form-item-container">
+              <view class="es-form-item-label">
+                <text>{{ formSchema.label || "未知" }}</text>
+              </view>
+              <view class="es-form-item-content">
+                <view class="es-form-upload-box">
+                  <view
+                    class="es-form-upload-item"
+                    v-for="(imgItem, imgIndex) in formData[formSchema.field]"
+                    :key="imgIndex"
+                  >
+                    <image
+                      @click="uploadImgPreview(formData, formSchema, imgIndex)"
+                      mode="aspectFill"
+                      class="es-form-upload-item-img"
+                      :src="imgItem"
+                    />
+                    <view
+                      class="es-form-upload-close-icon"
+                      @click.stop="
+                        uploadImgDelete(formData, formSchema, imgIndex)
+                      "
+                    >
+                      <text class="close-icon es-icon es-icon-tianjia1"></text>
+                    </view>
+                  </view>
+
+                  <view
+                    class="es-form-upload-btn"
+                    @click="uploadImgchoose(formData, formSchema)"
+                    v-if="
+                      formData[formSchema.field].length <
+                      (formSchema.componentProps?.uploadProps?.maxNum || 9)
+                    "
+                  >
+                    <text class="upload-icon es-icon es-icon-tianjia1"></text>
+                  </view>
+                </view>
+                <view
+                  class="es-form-upload-alert-text"
+                  v-if="formSchema.componentProps?.uploadProps?.alertText"
+                  >{{ formSchema.componentProps?.uploadProps?.alertText }}</view
+                >
+              </view>
+              <view class="es-form-item-clear-icon">
+                <text class="upload-img-count-text"
+                  >{{ formData[formSchema.field].length }}/{{
+                    formSchema.componentProps?.uploadProps?.maxNum || 9
+                  }}</text
+                >
+              </view>
+            </view>
+            <view
+              class="es-form-item-bottom-line"
+              v-if="
+                showItemSplitLine &&
+                schemaIndex < formSchemas.length - 1 &&
+                formSchemas[schemaIndex + 1].component !== 'SplitLine'
+              "
+            ></view>
+          </view>
           <!-- 分割线 -->
           <view
             class="es-form-item-split-line"
@@ -318,8 +392,10 @@ import { formItem, formMethods, formProps } from "./types";
 import cloneDeep from "lodash/cloneDeep";
 import esButton from "../es-button/index.vue";
 import { useVerifyCode } from "./hooks/verify-code";
+import { useUploadImg } from "./hooks/upload-img";
 const { verifyCodeTimer, getVerifyCode, getVerifyCodeBtnIsLoading } =
   useVerifyCode();
+const { uploadImgchoose, uploadImgDelete, uploadImgPreview } = useUploadImg();
 // @ts-ignore
 import uniDataPicker from "../../uni-components/uni-data-picker/components/uni-data-picker/uni-data-picker.vue";
 // 事件
@@ -551,7 +627,7 @@ $es-form-item-height: 120rpx;
     }
     .es-form-item {
       padding: 0 34rpx;
-      height: $es-form-item-height;
+      min-height: $es-form-item-height;
       position: relative;
       background-color: #fff;
       .es-form-item-container {
@@ -561,9 +637,12 @@ $es-form-item-height: 120rpx;
         position: relative;
         .es-form-item-label {
           width: 29%;
-
+          height: $es-form-item-height;
           color: $es-form-label-color;
           font-size: $uni-font-size-base;
+          display: flex;
+          align-items: center;
+          align-self: flex-start;
         }
         .es-form-item-content {
           margin-left: 2%;
@@ -580,6 +659,74 @@ $es-form-item-height: 120rpx;
 
             color: $uni-text-color-placeholder;
           }
+          // 上传缩略尺寸
+          $upload-item-size: 124rpx;
+          .es-form-upload-alert-text {
+            color: #d38600;
+            font-size: $uni-font-size-base;
+            padding-bottom: 20rpx;
+          }
+          .es-form-upload-box {
+            display: flex;
+            padding-top: 32rpx;
+            padding-bottom: 32rpx;
+            flex-wrap: wrap;
+            // .es-form-upload-item:first-child {
+            //   margin-left: 0;
+            // }
+            .es-form-upload-item {
+              width: $upload-item-size;
+              height: $upload-item-size;
+              border-radius: 20rpx;
+              border: 2rpx solid transparent;
+              box-sizing: border-box;
+              // background-color: #ccc;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              overflow: hidden;
+              margin-left: 12rpx;
+              margin-bottom: 12rpx;
+              position: relative;
+              .es-form-upload-item-img {
+                width: 100%;
+                height: 100%;
+              }
+              .es-form-upload-close-icon {
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 40rpx;
+                height: 40rpx;
+                border-bottom-left-radius: 20rpx;
+                background-color: rgba($color: #000000, $alpha: 0.4);
+                color: #ffffff;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                .close-icon {
+                  font-size: $uni-font-size-sm;
+                }
+              }
+            }
+            .es-form-upload-btn {
+              width: $upload-item-size;
+              height: $upload-item-size;
+              border-radius: 20rpx;
+              border: 2rpx solid $uni-border-color;
+              box-sizing: border-box;
+              margin-left: 12rpx;
+              // background-color: #ccc;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              .upload-icon {
+                color: $uni-border-color;
+                font-size: $uni-font-size-title;
+              }
+              box-sizing: border-box;
+            }
+          }
         }
         .es-form-item-content.es-form-item-content-verify-code {
           display: flex;
@@ -593,12 +740,15 @@ $es-form-item-height: 120rpx;
         .es-form-item-clear-icon {
           width: $es-form-item-height;
           height: $es-form-item-height;
-
+          align-self: flex-start;
           width: 9%;
           display: flex;
           justify-content: center;
           align-items: center;
-
+          .upload-img-count-text {
+            font-size: $uni-font-size-sm;
+            color: $uni-color-subtitle;
+          }
           .es-form-item-clear-icon-box {
             width: 28rpx;
             height: 28rpx;

@@ -2,7 +2,7 @@
  * @Date: 2022-06-02 12:32:36
  * @LastEditors: YuanBo
  * @Author: YuanBo
- * @LastEditTime: 2022-06-07 17:22:54
+ * @LastEditTime: 2022-06-08 10:53:14
  * @FilePath: /easy-app/src/easy-ui/components/es-form/defaultValueMap.ts
  */
 export const valueMap = {
@@ -18,8 +18,8 @@ export const valueMap = {
   Radio: "",
   Switch: false,
   Slider: 0,
-  Cascader: "",
-  Upload: "",
+  Cascader: [],
+  Upload: [],
   Rate: 0,
   Color: "",
   Time: "",
