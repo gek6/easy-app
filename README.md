@@ -5,7 +5,7 @@
  * @LastEditTime: 2022-06-12 12:48:14
  * @FilePath: /easy-app/README.md
 -->
-### 项目简介 1.0
+### 项目简介 2.0
 UNI-APP CLI版(脚手架) + TypeScript + Vue3 + pinia + ColorUI 的最新组合拳。推荐使用vscode。包括但不限于配置化表单、表格、自定义Tabbar等等
 选择ColorUI是因为这是个纯CSS库,不受vue版本影响,感谢ColorUI.
 
