@@ -2,7 +2,7 @@
  * @Date: 2022-06-08 16:03:12
  * @LastEditors: YuanBo
  * @Author: YuanBo
- * @LastEditTime: 2022-06-12 12:52:40
+ * @LastEditTime: 2022-06-12 16:20:54
  * @FilePath: /easy-app/README.md
 -->
 ### 项目简介 3.0
