@@ -30,6 +30,33 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.es-icon-shenfen:before {
+  content: "\e74d";
+}
+.es-icon-qiyexinxi:before {
+  content: "\e609";
+}
+
+.es-icon-dingwei:before {
+  content: "\e60d";
+}
+
+.es-icon-dingwei1:before {
+  content: "\e607";
+}
+
+.es-icon-zhiye:before {
+  content: "\e604";
+}
+
+
+.es-icon-gouxuan:before {
+  content: "\e60f";
+}
+
+.es-icon-gouxuan1:before {
+  content: "\e65c";
+}
 .es-icon-loading:before {
   content: "\e65a";
 }

@@ -2,8 +2,8 @@
  * @Date: 2022-06-01 14:17:44
  * @LastEditors: YuanBo
  * @Author: YuanBo
- * @LastEditTime: 2022-06-02 17:45:57
- * @FilePath: /easy-app/src/easy-ui/components/es-button/index.vue
+ * @LastEditTime: 2022-06-17 17:00:19
+ * @FilePath: /健康西安-小程序-升级/src/easy-ui/components/es-button/index.vue
 -->
 <template>
   <button
@@ -26,7 +26,9 @@
     :loading="loadingMode === 'origin' && loading"
     :disabled="disabled"
     :open-type="openType"
-    :style="style"
+    :style="{
+      ...props.style,
+    }"
     @click.stop="clickHandle"
     @getphonenumber="getphonenumber"
 		@getuserinfo="getuserinfo"
@@ -123,8 +125,8 @@ const props = defineProps({
     default: false,
   },
   style:{
-    type: String,
-    default: '',
+    type: Object,
+    default: () => ({}),
   },
 });
 function clickHandle(event: any) {

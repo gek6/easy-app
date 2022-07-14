@@ -2,8 +2,8 @@
  * @Date: 2022-06-02 10:21:12
  * @LastEditors: YuanBo
  * @Author: YuanBo
- * @LastEditTime: 2022-06-08 15:55:56
- * @FilePath: /easy-app/src/easy-ui/components/es-form/types.ts
+ * @LastEditTime: 2022-07-12 16:25:13
+ * @FilePath: /健康西安-小程序-升级/src/easy-ui/components/es-form/types.ts
  */
 // 组件属性
 export interface componentProps {
@@ -19,12 +19,7 @@ export interface componentProps {
   // 结果为数组时,显示的结果拼接字符
   joinStr?: string;
   // 非远程加载的选项
-  options?: {
-    label: string;
-    value: any;
-    // 允许其他未知属性
-    [propName: string]: any;
-  }[];
+  options?: Record<string, any>[];
   // 待选择和输入时的占位提示文字
   placeholder?: string;
   // text	文本输入键盘 number	数字输入键盘 idcard	身份证输入键盘 digit	带小数点的数字键盘 tel	电话输入键盘
@@ -54,12 +49,15 @@ export interface componentProps {
 
   onChange?: (value: any) => any;
 
+  /** 插槽名称，不支持双向绑定 */
+  slot?: string;
+
   /**
    * 上传配置
    * @maxNum number 最大上传数量
    * @chooseImgProps object 选择图片配置
    */
-   uploadProps?:uploadProps;
+  uploadProps?: uploadProps;
   // 允许其他未知属性
   [propName: string]: any;
 }
@@ -73,6 +71,14 @@ export interface formItem {
   component: componentType;
   // 字段属性
   componentProps?: componentProps;
+  // 是否必填
+  required?: boolean;
+  // 验证器
+  validator?: (
+    formData: any,
+    formSchemas: formItem[],
+    field: string
+  ) => Promise<boolean>;
 }
 // 组件类型
 export type componentType =
@@ -94,7 +100,8 @@ export type componentType =
   | "Color"
   | "Time"
   | "DateTime"
-  | "SplitLine";
+  | "SplitLine"
+  | "Slot";
 export interface formProps {
   // 表单标题
   title?: string;
@@ -107,6 +114,8 @@ export interface formProps {
 export interface formMethods {
   setProps: (props: formProps) => void;
   getFieldsValue: () => any;
+  setFieldsValue: (data: any) => void;
+  validate: () => Promise<boolean>;
 }
 export type useEsFormReturn = [(actions: formMethods) => void, formMethods];
 type chooseImgSizeType = "compressed" | "original";
@@ -142,4 +151,22 @@ export type uploadProps = {
    * @complete function 完成回调
    */
   chooseImgProps?: chooseImgProps;
+  /**
+   * 是否显示 1/9 的统计数量
+   */
+  hideNum?: boolean;
+
+  /**
+   * 上传插槽
+   */
+  slot?: string;
+  /**
+   * 预览插槽
+   * 这玩意 在H5好使， 小程序上 不行，组件向插槽传参无法实现
+   */
+  previewSlot?: string;
+
+  previewWidth?: number;
+  previewHeight?: number;
+  uploadSuccessHandler?: (imgBase64: string) => void;
 };

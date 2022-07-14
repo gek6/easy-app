@@ -25,4 +25,5 @@ export const valueMap = {
   Time: "",
   DateTime: "",
   SplitLine: "",
+  Slot: undefined,
 };
