@@ -1,3 +1,10 @@
 // 此文件勿动
-
-// #exec hotJs('./router/index.js')
+{
+  // 主包路由
+  "pages": // #exec hotJs('./router/pkg-main/index.js')
+  // 分包路由
+  // subPackages: [require("./pkg-worker"), require("./pkg-user")],
+  "globalStyle": // #exec hotJs('./router/globalStyle/index.js'),
+  // 启动页面
+  "condition": // #exec hotJs('./router/condition/index.js')
+}

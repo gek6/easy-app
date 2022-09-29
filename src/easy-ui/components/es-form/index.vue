@@ -415,7 +415,7 @@ import { valueMap } from "./defaultValueMap";
 import { useUploadImg } from "./hooks/upload-img";
 import { useVerifyCode } from "./hooks/verify-code";
 import { formItem, formMethods, formProps } from "./types";
-import { visitTree } from "/@/utils";
+import { visitTree } from "../../utils/index";
 const { verifyCodeTimer, getVerifyCode, getVerifyCodeBtnIsLoading } =
   useVerifyCode();
 const { uploadImgchoose, uploadImgDelete, uploadImgPreview } = useUploadImg();
