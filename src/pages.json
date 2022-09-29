@@ -1,10 +1,41 @@
-// 此文件勿动
 {
-  // 主包路由
-  "pages": // #exec hotJs('./router/pkg-main/index.js')
-  // 分包路由
-  // subPackages: [require("./pkg-worker"), require("./pkg-user")],
-  "globalStyle": // #exec hotJs('./router/globalStyle/index.js'),
-  // 启动页面
-  "condition": // #exec hotJs('./router/condition/index.js')
+  "pages": [
+    {
+      "path": "pages/index/index",
+      "style": {
+        "navigationBarTitleText": "首页"
+      }
+    },
+    {
+      "path": "pages/bind-phone/index",
+      "style": {
+        "navigationBarTitleText": "绑定手机号"
+      }
+    },
+    {
+      "path": "pages/example/form/index",
+      "style": {
+        "navigationBarTitleText": "示例-表单"
+      }
+    },
+    {
+      "path": "pages/example/list/index",
+      "style": {
+        "navigationBarTitleText": "示例-列表"
+      }
+    },
+    {
+      "path": "pages/example/button/index",
+      "style": {
+        "navigationBarTitleText": "示例-按钮"
+      }
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "easy-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "condition": []
 }
